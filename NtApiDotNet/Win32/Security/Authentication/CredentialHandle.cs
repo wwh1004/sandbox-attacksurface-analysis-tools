@@ -144,7 +144,7 @@ namespace NtApiDotNet.Win32.Security.Authentication
             }
 
             byte[] proxy = Encoding.Unicode.GetBytes(proxy_server);
-            byte[] creds = credentials?.ToArray() ?? Array.Empty<byte>();
+            byte[] creds = credentials?.ToArray() ?? Array2.Empty<byte>();
             using (var buffer = new SafeStructureInOutBuffer<SecPkgCredentials_KdcProxySettings>(proxy.Length + creds.Length, true))
             {
                 buffer.Data.WriteBytes(proxy);

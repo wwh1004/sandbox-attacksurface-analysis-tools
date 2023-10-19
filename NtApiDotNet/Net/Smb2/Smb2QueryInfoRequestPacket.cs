@@ -50,7 +50,7 @@ namespace NtApiDotNet.Net.Smb2
             writer.Write(AdditionalInformation);
             writer.Write(Flags);
             _file_id.Write(writer);
-            writer.Write(InputBuffer ?? Array.Empty<byte>());
+            writer.Write(InputBuffer ?? Array2.Empty<byte>());
         }
     }
 }

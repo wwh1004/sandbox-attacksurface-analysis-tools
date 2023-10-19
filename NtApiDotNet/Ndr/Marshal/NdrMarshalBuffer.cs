@@ -575,7 +575,7 @@ namespace NtApiDotNet.Ndr.Marshal
 
         public void WriteBasicString(string str)
         {
-            char[] chars = str?.ToCharArray() ?? Array.Empty<char>();
+            char[] chars = str?.ToCharArray() ?? Array2.Empty<char>();
             var blob = new FLAGGED_WORD_BLOB(str == null ? -1 : chars.Length * 2, chars.Length, chars);
             WriteStruct(blob);
         }
@@ -583,7 +583,7 @@ namespace NtApiDotNet.Ndr.Marshal
         public void WriteHString(string str)
         {
             Align(8);
-            char[] chars = str?.ToCharArray() ?? Array.Empty<char>();
+            char[] chars = str?.ToCharArray() ?? Array2.Empty<char>();
             WriteInt32(NdrUserMarshal.WDT_INPROC_CALL);
             WriteInt32(chars.Length * 2);
             WriteChars(chars);

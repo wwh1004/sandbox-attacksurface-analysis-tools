@@ -54,7 +54,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Cryptography
             try
             {
                 if (SecurityNativeMethods.CDLocateCheckSum(checksum_type, out IntPtr ptr).IsSuccess())
-                    return new KerberosChecksumEngineNative(Marshal.PtrToStructure<KERB_CHECKSUM>(ptr));
+                    return new KerberosChecksumEngineNative((KERB_CHECKSUM)Marshal.PtrToStructure(ptr, typeof(KERB_CHECKSUM)));
             }
             catch (EntryPointNotFoundException)
             {

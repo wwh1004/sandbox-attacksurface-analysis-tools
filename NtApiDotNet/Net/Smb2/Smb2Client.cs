@@ -248,7 +248,7 @@ namespace NtApiDotNet.Net.Smb2
             if (SigningRequired && !client_context.ReturnAttributes.HasFlagSet(InitializeContextRetFlags.Integrity))
                 throw new InvalidDataException("Server requires signing but client authentication didn't negotiate it.");
 
-            session.SetSessionKey(client_context.SessionKey ?? Array.Empty<byte>());
+            session.SetSessionKey(client_context.SessionKey ?? Array2.Empty<byte>());
             return session;
         }
 
@@ -294,7 +294,7 @@ namespace NtApiDotNet.Net.Smb2
             _client_stream = null;
             _client_reader = null;
             _client_writer = null;
-            _client?.Dispose();
+            _client?.Close();
             _client = null;
             _message_id = 0;
             _nego_response = null;

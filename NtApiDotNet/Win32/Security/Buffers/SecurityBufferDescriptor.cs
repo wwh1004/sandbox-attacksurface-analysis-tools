@@ -28,7 +28,7 @@ namespace NtApiDotNet.Win32.Security.Buffers
         private SecurityBufferDescriptor(IEnumerable<SecurityBuffer> buffers)
         {
             _list = new DisposableList();
-            _buffers = buffers?.ToArray() ?? Array.Empty<SecurityBuffer>();
+            _buffers = buffers?.ToArray() ?? Array2.Empty<SecurityBuffer>();
             _sec_buffers = _buffers.Select(b => b.ToBuffer(_list)).ToArray();
             if (_sec_buffers.Length > 0)
             {

@@ -100,7 +100,7 @@ namespace NtApiDotNet.Win32.Security.Credential
                 throw new ArgumentNullException(nameof(certificate));
             }
 
-            byte[] blob = pin != null ? Encoding.Unicode.GetBytes(pin) : Array.Empty<byte>();
+            byte[] blob = pin != null ? Encoding.Unicode.GetBytes(pin) : Array2.Empty<byte>();
             byte[] thumbprint = SHA1.Create().ComputeHash(certificate.GetRawCertData());
             var username = CredentialManager.MarshalCredential(new CredentialMarshalCertificate(thumbprint), throw_on_error);
             if (!username.IsSuccess)

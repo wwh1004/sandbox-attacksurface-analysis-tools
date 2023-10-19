@@ -98,7 +98,7 @@ namespace NtApiDotNet.Win32.Security.Authentication
         /// </summary>
         public AuthenticationToken()
         {
-            _data = Array.Empty<byte>();
+            _data = Array2.Empty<byte>();
         }
 
         /// <summary>

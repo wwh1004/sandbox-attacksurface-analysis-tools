@@ -59,7 +59,7 @@ namespace NtApiDotNet.Win32.Security.Buffers
             BinaryWriter writer = new BinaryWriter(stm);
 
             // Manual marshaling of SEC_CHANNEL_BINDINGS
-            int current_ofs = Marshal.SizeOf<SEC_CHANNEL_BINDINGS>();
+            int current_ofs = Marshal.SizeOf(typeof(SEC_CHANNEL_BINDINGS));
             writer.Write(ChannelBinding.InitiatorAddrType);
             AddBuffer(writer, ref current_ofs, ChannelBinding.Initiator?.Length);
             writer.Write(ChannelBinding.AcceptorAddrType);
@@ -91,7 +91,7 @@ namespace NtApiDotNet.Win32.Security.Buffers
 
         private void WriteBuffer(BinaryWriter writer, byte[] buffer)
         {
-            writer.Write(buffer ?? Array.Empty<byte>());
+            writer.Write(buffer ?? Array2.Empty<byte>());
         }
 
         internal override void FromBuffer(SecBuffer buffer)

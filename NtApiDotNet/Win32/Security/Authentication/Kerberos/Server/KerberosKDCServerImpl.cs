@@ -80,7 +80,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Server
 
         private static byte[] CreateU2UErrorData()
         {
-            KerberosTypedData error = new KerberosTypedData(KerberosTypedDataType.MustUseUser2User, Array.Empty<byte>());
+            KerberosTypedData error = new KerberosTypedData(KerberosTypedDataType.MustUseUser2User, Array2.Empty<byte>());
             DERBuilder builder = new DERBuilder();
             builder.WriteSequence(new[] { error });
             return builder.ToArray();
@@ -129,7 +129,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Server
 
             KerberosTicketBuilder ticket_builder = new KerberosTicketBuilder(5, realm, server_name, flags, realm, client_name,
                 auth_time, KerberosTime.Now, KerberosTime.MaximumTime, KerberosTime.MaximumTime, ticket_key,
-                new KerberosTransitedEncoding(KerberosTransitedEncodingType.X500Compress, Array.Empty<byte>()), null, auth_data);
+                new KerberosTransitedEncoding(KerberosTransitedEncodingType.X500Compress, Array2.Empty<byte>()), null, auth_data);
 
             var ticket_dec = ticket_builder.Create();
             var ticket = ticket_dec.Encrypt(key);

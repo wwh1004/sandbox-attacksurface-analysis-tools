@@ -178,7 +178,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Ntlm.Client
                 builder = new NtlmAuthenticateAuthenticationTokenBuilder
                 {
                     LmChallengeResponse = new byte[1],
-                    NtChallengeResponse = Array.Empty<byte>(),
+                    NtChallengeResponse = Array2.Empty<byte>(),
                     Flags = nego_flags | NtlmNegotiateFlags.Anonymous
                 };
                 session_base_key = new byte[16];
@@ -317,7 +317,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Ntlm.Client
 
         public long Expiry => long.MaxValue;
 
-        public byte[] SessionKey => _session_key ?? Array.Empty<byte>();
+        public byte[] SessionKey => _session_key ?? Array2.Empty<byte>();
 
         public string PackageName => AuthenticationPackage.NTLM_NAME;
 

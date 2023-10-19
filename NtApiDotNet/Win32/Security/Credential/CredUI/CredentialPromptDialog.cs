@@ -57,7 +57,7 @@ namespace NtApiDotNet.Win32.Security.Credential.CredUI
         {
             return new CREDUI_INFO()
             {
-                cbSize = Marshal.SizeOf<CREDUI_INFO>(),
+                cbSize = Marshal.SizeOf(typeof(CREDUI_INFO)),
                 hwndParent = HwndParent,
                 pszMessageText = MessageText,
                 pszCaptionText = CaptionText,

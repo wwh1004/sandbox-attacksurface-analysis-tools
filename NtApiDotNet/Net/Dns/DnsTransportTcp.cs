@@ -36,7 +36,7 @@ namespace NtApiDotNet.Net.Dns
 
         public void Dispose()
         {
-            _client.Dispose();
+            _client.Close();
         }
 
         public byte[] Receive()

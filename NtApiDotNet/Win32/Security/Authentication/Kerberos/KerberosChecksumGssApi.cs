@@ -86,7 +86,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos
         /// Constructor.
         /// </summary>
         public KerberosChecksumGSSApi() 
-            : base(KerberosChecksumType.GSSAPI, Array.Empty<byte>())
+            : base(KerberosChecksumType.GSSAPI, Array2.Empty<byte>())
         {
         }
 
@@ -101,7 +101,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos
         public KerberosChecksumGSSApi(KerberosChecksumGSSApiFlags context_flags, byte[] channel_binding = null,
             int delegation_option_identifier = 0, KerberosCredential credentials = null, byte[] extensions = null) : this()
         {
-            ChannelBinding = channel_binding ?? Array.Empty<byte>();
+            ChannelBinding = channel_binding ?? Array2.Empty<byte>();
             ContextFlags = context_flags;
             if (ContextFlags.HasFlagSet(KerberosChecksumGSSApiFlags.Delegate))
             {

@@ -53,7 +53,7 @@ namespace NtApiDotNet.Net.Smb2
         {
             _client = client;
             SessionId = session_id;
-            _full_session_key = _session_key = Array.Empty<byte>();
+            _full_session_key = _session_key = Array2.Empty<byte>();
         }
         internal void UpdateSignature(byte[] data)
         {

@@ -127,7 +127,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Client
         /// <param name="realm">The realm for the client.</param>
         /// <param name="additional_tickets">Additional tickets to add to the cache.</param>
         public KerberosLocalTicketCache(KerberosExternalTicket tgt_ticket, KerberosKDCClient kdc_client, string realm = null,
-            IEnumerable<KerberosExternalTicket> additional_tickets = null) : this(additional_tickets ?? Array.Empty<KerberosExternalTicket>())
+            IEnumerable<KerberosExternalTicket> additional_tickets = null) : this(additional_tickets ?? Array2.Empty<KerberosExternalTicket>())
         {
             _tgt_ticket = tgt_ticket ?? throw new ArgumentNullException(nameof(tgt_ticket));
             _kdc_client = kdc_client ?? throw new ArgumentNullException(nameof(kdc_client));

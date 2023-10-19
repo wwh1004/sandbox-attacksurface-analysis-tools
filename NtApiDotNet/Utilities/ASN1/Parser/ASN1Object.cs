@@ -51,7 +51,7 @@ namespace NtApiDotNet.Utilities.ASN1.Parser
         private protected readonly List<ASN1Object> _children;
 
         private protected ASN1Object(DERValue value) : this((ASN1ObjectType)value.Type, value.Tag, 
-            value.Constructed, value.HasChildren() ? value.Children.Select(ToObject) : Array.Empty<ASN1Object>(),
+            value.Constructed, value.HasChildren() ? value.Children.Select(ToObject) : Array2.Empty<ASN1Object>(),
             value.Data)
         {
         }
@@ -132,7 +132,7 @@ namespace NtApiDotNet.Utilities.ASN1.Parser
         /// <summary>
         /// Get the ASN1 object's data.
         /// </summary>
-        public byte[] Data => Constructed ? Array.Empty<byte>() : _data.CloneBytes();
+        public byte[] Data => Constructed ? Array2.Empty<byte>() : _data.CloneBytes();
 
         /// <summary>
         /// The parent object.

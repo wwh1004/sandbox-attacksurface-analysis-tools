@@ -97,7 +97,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Cryptography
             try
             {
                 if (SecurityNativeMethods.CDLocateCSystem(encryption_type, out IntPtr ptr).IsSuccess())
-                    return new KerberosEncryptionEngineNative(Marshal.PtrToStructure<KERB_ECRYPT>(ptr));
+                    return new KerberosEncryptionEngineNative((KERB_ECRYPT)Marshal.PtrToStructure(ptr, typeof(KERB_ECRYPT)));
             }
             catch (EntryPointNotFoundException)
             {

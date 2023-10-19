@@ -30,7 +30,7 @@ namespace NtApiDotNet.Utilities.Memory
         {
             if (ptr == IntPtr.Zero)
                 return default;
-            return Marshal.PtrToStructure<T>(ptr);
+            return (T)Marshal.PtrToStructure(ptr, typeof(T));
         }
 
         internal static Guid? ReadGuid(this IntPtr ptr)
@@ -45,7 +45,7 @@ namespace NtApiDotNet.Utilities.Memory
             if (ptr == IntPtr.Zero)
                 return null;
             T[] ret = new T[count];
-            int element_size = Marshal.SizeOf<T>();
+            int element_size = Marshal.SizeOf(typeof(T));
             for (int i = 0; i < count; ++i)
             {
                 ret[i] = ReadStruct<T>(ptr + (i * element_size));

@@ -75,12 +75,12 @@ namespace NtApiDotNet.Win32.Security.Authentication
             BinaryWriter writer = new BinaryWriter(stm);
             writer.Write(InitiatorAddrType);
             writer.Write(Initiator?.Length ?? 0);
-            writer.Write(Initiator ?? Array.Empty<byte>());
+            writer.Write(Initiator ?? Array2.Empty<byte>());
             writer.Write(AcceptorAddrType);
             writer.Write(Acceptor?.Length ?? 0);
-            writer.Write(Acceptor ?? Array.Empty<byte>());
+            writer.Write(Acceptor ?? Array2.Empty<byte>());
             writer.Write(ApplicationData?.Length ?? 0);
-            writer.Write(ApplicationData ?? Array.Empty<byte>());
+            writer.Write(ApplicationData ?? Array2.Empty<byte>());
             return MD5.Create().ComputeHash(stm.ToArray());
         }
 

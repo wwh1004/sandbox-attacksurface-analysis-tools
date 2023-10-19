@@ -60,7 +60,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos
         public KerberosTypedData(KerberosTypedDataType type, byte[] data)
         {
             Type = type;
-            Data = data ?? Array.Empty<byte>();
+            Data = data ?? Array2.Empty<byte>();
         }
 
         private static KerberosTypedData Parse(DERValue value)

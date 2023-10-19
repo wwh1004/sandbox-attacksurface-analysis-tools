@@ -35,7 +35,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Ntlm.Builder
 
         internal static void WriteBinary(this BinaryWriter writer, byte[] data, int base_offset, MemoryStream payload)
         {
-            data = data ?? Array.Empty<byte>();
+            data = data ?? Array2.Empty<byte>();
             writer.Write((ushort)data.Length);
             writer.Write((ushort)data.Length);
             writer.Write((int)(base_offset + payload.Length));
@@ -51,7 +51,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Ntlm.Builder
                 payload.WriteByte(0);
             }
 
-            WriteBinary(writer, value != null ? encoding.GetBytes(value) : Array.Empty<byte>(), base_offset, payload);
+            WriteBinary(writer, value != null ? encoding.GetBytes(value) : Array2.Empty<byte>(), base_offset, payload);
         }
 
         internal static void SerializeAvPairs(this IReadOnlyCollection<NtlmAvPair> pairs, BinaryWriter writer)
@@ -60,13 +60,13 @@ namespace NtApiDotNet.Win32.Security.Authentication.Ntlm.Builder
             {
                 pair.Write(writer);
             }
-            new NtlmAvPairBytes(MsAvPairType.EOL, Array.Empty<byte>()).Write(writer);
+            new NtlmAvPairBytes(MsAvPairType.EOL, Array2.Empty<byte>()).Write(writer);
         }
 
         internal static byte[] SerializeAvPairs(this IReadOnlyCollection<NtlmAvPair> pairs)
         {
             if (pairs.Count == 0)
-                return Array.Empty<byte>();
+                return Array2.Empty<byte>();
             MemoryStream stm = new MemoryStream();
             BinaryWriter writer = new BinaryWriter(stm);
             pairs.SerializeAvPairs(writer);

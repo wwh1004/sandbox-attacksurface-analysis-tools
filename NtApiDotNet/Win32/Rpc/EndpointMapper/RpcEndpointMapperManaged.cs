@@ -67,7 +67,7 @@ namespace NtApiDotNet.Win32.Rpc.EndpointMapper
             {
                 if (throw_on_error)
                     throw new SafeWin32Exception(Win32Error.RPC_S_INVALID_STRING_BINDING);
-                return Array.Empty<RpcEndpoint>();
+                return Array2.Empty<RpcEndpoint>();
             }
 
             try

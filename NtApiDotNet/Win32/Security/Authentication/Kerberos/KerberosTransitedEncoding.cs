@@ -53,7 +53,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos
         /// Constructor.
         /// </summary>
         public KerberosTransitedEncoding() 
-            : this(KerberosTransitedEncodingType.X500Compress, Array.Empty<byte>())
+            : this(KerberosTransitedEncodingType.X500Compress, Array2.Empty<byte>())
         {
         }
 

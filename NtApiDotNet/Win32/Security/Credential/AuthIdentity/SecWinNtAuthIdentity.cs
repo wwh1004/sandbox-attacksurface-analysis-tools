@@ -145,7 +145,7 @@ namespace NtApiDotNet.Win32.Security.Credential.AuthIdentity
 
             byte[] creds = packed_credentials.ToArray(encrypt);
 
-            int header_size = Marshal.SizeOf<SEC_WINNT_AUTH_IDENTITY_EX2>();
+            int header_size = Marshal.SizeOf(typeof(SEC_WINNT_AUTH_IDENTITY_EX2));
             SEC_WINNT_AUTH_IDENTITY_EX2 auth_id = new SEC_WINNT_AUTH_IDENTITY_EX2
             {
                 Version = SEC_WINNT_AUTH_IDENTITY_EX2.SEC_WINNT_AUTH_IDENTITY_VERSION_2,

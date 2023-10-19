@@ -39,7 +39,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Logon
                 throw new ArgumentNullException(nameof(Hash));
             MemoryStream stm = new MemoryStream();
             BinaryWriter writer = new BinaryWriter(stm);
-            byte[] name = Array.Empty<byte>();
+            byte[] name = Array2.Empty<byte>();
             if (!(StoreName is null))
             {
                 name = Encoding.Unicode.GetBytes(StoreName + "\0");

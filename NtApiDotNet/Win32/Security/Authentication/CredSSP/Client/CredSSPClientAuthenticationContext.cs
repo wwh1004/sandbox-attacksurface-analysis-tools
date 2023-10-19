@@ -136,7 +136,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.CredSSP.Client
 
         public long Expiry => 0;
 
-        public byte[] SessionKey => Array.Empty<byte>();
+        public byte[] SessionKey => Array2.Empty<byte>();
 
         public string PackageName => AuthenticationPackage.CREDSSP_NAME;
 

@@ -131,7 +131,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos
 
         #region Constructors
         internal KerberosEncryptedData() 
-            : this(KerberosEncryptionType.NULL, null, Array.Empty<byte>())
+            : this(KerberosEncryptionType.NULL, null, Array2.Empty<byte>())
         {
         }
 

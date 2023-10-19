@@ -31,7 +31,7 @@ namespace NtApiDotNet.Net.Smb2
             int security_buffer_size = reader.ReadUInt16();
             if (security_buffer_size == 0)
             {
-                SecurityBuffer = Array.Empty<byte>();
+                SecurityBuffer = Array2.Empty<byte>();
             }
             else
             {

@@ -51,7 +51,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Utilities
         {
             int length = reader.ReadInt32BE();
             if (length == 0)
-                return Array.Empty<byte>();
+                return Array2.Empty<byte>();
             return reader.ReadAllBytes(length);
         }
 

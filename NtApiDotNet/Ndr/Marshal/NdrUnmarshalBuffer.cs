@@ -360,7 +360,7 @@ namespace NtApiDotNet.Ndr.Marshal
         {
             if (actual_count == 0)
             {
-                return Array.Empty<T>();
+                return Array2.Empty<T>();
             }
             int size = NdrNativeUtils.GetPrimitiveTypeSize<T>();
             Align(size);

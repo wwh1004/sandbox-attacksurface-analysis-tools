@@ -73,7 +73,7 @@ namespace NtApiDotNet.Win32.Security.Authentication.Ntlm.Builder
             if (Version != null)
                 flags |= NtlmNegotiateFlags.Version;
 
-            byte[] mic = MessageIntegrityCode ?? Array.Empty<byte>();
+            byte[] mic = MessageIntegrityCode ?? Array2.Empty<byte>();
             if (mic.Length != 0 && mic.Length < 16)
                     throw new ArgumentException("MIC must be 16 bytes in size if present.", nameof(MessageIntegrityCode));
             int base_offset = BASE_OFFSET + mic.Length;

@@ -376,7 +376,7 @@ namespace NtApiDotNet
         /// <remarks>This is unsafe and does no length checks. Use with caution.</remarks>
         public T ReadStructUnsafe<T>()
         {
-            return Marshal.PtrToStructure<T>(DangerousGetHandle());
+            return (T)Marshal.PtrToStructure(DangerousGetHandle(), typeof(T));
         }
 
         /// <summary>

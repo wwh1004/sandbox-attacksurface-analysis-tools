@@ -108,7 +108,7 @@ namespace NtApiDotNet.Win32.Security.Credential.AuthIdentity
 
         internal byte[] ToArray(bool pad_for_encryption)
         {
-            ushort header_size = (ushort)Marshal.SizeOf<SEC_WINNT_AUTH_PACKED_CREDENTIALS>();
+            ushort header_size = (ushort)Marshal.SizeOf(typeof(SEC_WINNT_AUTH_PACKED_CREDENTIALS));
             int total_size = header_size + _credentials.Length;
             if ((total_size & 0x7) != 0)
                 total_size += 8 - (total_size & 0x7);

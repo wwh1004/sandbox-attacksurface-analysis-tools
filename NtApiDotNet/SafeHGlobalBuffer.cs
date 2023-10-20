@@ -73,6 +73,28 @@ namespace NtApiDotNet
         /// Resize the SafeBuffer.
         /// </summary>
         /// <param name="new_length"></param>
+#if NET6_0_OR_GREATER
+        public virtual void Resize(int new_length)
+        {
+            IntPtr free_handle = IntPtr.Zero;
+            try
+            {
+                byte[] old_data = new byte[Length];
+                Marshal.Copy(handle, old_data, 0, Length);
+                free_handle = Marshal.AllocHGlobal(new_length);
+                Marshal.Copy(old_data, 0, free_handle, Math.Min(new_length, Length));
+                free_handle = Interlocked.Exchange(ref handle, free_handle);
+                InitializeLength(new_length);
+            }
+            finally
+            {
+                if (free_handle != IntPtr.Zero)
+                {
+                    Marshal.FreeHGlobal(free_handle);
+                }
+            }
+        }
+#else
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.None)]
         public virtual void Resize(int new_length)
         {
@@ -95,6 +117,7 @@ namespace NtApiDotNet
                 }
             }
         }
+#endif
 
         /// <summary>
         /// Overridden ReleaseHandle method.
@@ -115,7 +138,9 @@ namespace NtApiDotNet
         /// </summary>
         /// <returns>The detached buffer.</returns>
         /// <remarks>The original buffer will become invalid after this call.</remarks>
+#if !NET6_0_OR_GREATER
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
+#endif
         public SafeHGlobalBuffer Detach()
         {
             return Detach(Length);
@@ -127,6 +152,19 @@ namespace NtApiDotNet
         /// <param name="length">Specify a new length for the detached buffer. Must be &lt;= Length.</param>
         /// <returns>The detached buffer.</returns>
         /// <remarks>The original buffer will become invalid after this call.</remarks>
+#if NET6_0_OR_GREATER
+        public SafeHGlobalBuffer Detach(int length)
+        {
+            if (length > Length)
+            {
+                throw new ArgumentException("Buffer length is smaller than new length");
+            }
+
+            IntPtr handle = DangerousGetHandle();
+            SetHandleAsInvalid();
+            return new SafeHGlobalBuffer(handle, length, true);
+        }
+#else
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
         public SafeHGlobalBuffer Detach(int length)
         {
@@ -146,5 +184,6 @@ namespace NtApiDotNet
             {
             }
         }
+#endif
     }
 }

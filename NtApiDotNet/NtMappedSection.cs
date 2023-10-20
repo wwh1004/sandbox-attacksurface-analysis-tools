@@ -163,6 +163,14 @@ namespace NtApiDotNet
         /// <param name="length">Specify a new length for the detached buffer. Must be &lt;= Length.</param>
         /// <returns>The detached buffer.</returns>
         /// <remarks>The original buffer will become invalid after this call.</remarks>
+#if NET6_0_OR_GREATER
+        public NtMappedSection Detach(int length)
+        {
+            IntPtr handle = DangerousGetHandle();
+            SetHandleAsInvalid();
+            return new NtMappedSection(handle, length, true);
+        }
+#else
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
         public NtMappedSection Detach(int length)
         {
@@ -177,6 +185,7 @@ namespace NtApiDotNet
             {
             }
         }
+#endif
 
         #endregion
     }

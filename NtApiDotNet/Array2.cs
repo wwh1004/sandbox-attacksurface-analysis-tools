@@ -16,6 +16,7 @@ namespace System
 {
     internal static class Array2
     {
+#if NET45
         public static T[] Empty<T>()
         {
             return EmptyArray<T>.Value;
@@ -25,5 +26,11 @@ namespace System
         {
             public static readonly T[] Value = new T[0];
         }
+#else
+        public static T[] Empty<T>()
+        {
+            return Array.Empty<T>();
+        }
+#endif
     }
 }

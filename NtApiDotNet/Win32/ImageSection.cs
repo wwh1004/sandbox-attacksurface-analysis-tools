@@ -44,7 +44,9 @@ namespace NtApiDotNet.Win32
         /// Get the data as an array.
         /// </summary>
         /// <returns>The data as an array. If can't read the section returns an empty array.</returns>
-        [HandleProcessCorruptedStateExceptions]
+#if !NET6_0_OR_GREATER
+        [HandleProcessCorruptedStateExceptions] // TODO: Maybe crach
+#endif
         public byte[] ToArray()
         {
             try

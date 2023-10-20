@@ -544,7 +544,9 @@ namespace NtApiDotNet.Ndr
             }
         }
 
-        [HandleProcessCorruptedStateExceptions]
+#if !NET6_0_OR_GREATER
+        [HandleProcessCorruptedStateExceptions] // TODO: Maybe crach
+#endif
         private static T RunWithAccessCatch<T>(Func<T> func)
         {
             try

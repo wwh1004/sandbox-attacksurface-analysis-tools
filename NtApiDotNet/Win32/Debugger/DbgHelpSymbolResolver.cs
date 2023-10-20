@@ -771,7 +771,9 @@ namespace NtApiDotNet.Win32.Debugger
 
             try
             {
+#pragma warning disable SYSLIB0014
                 var request = WebRequest.CreateHttp(debug_data.GetSymbolPath(_symbol_server_path.AbsoluteUri));
+#pragma warning restore SYSLIB0014
                 using (var response = request.GetResponse())
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(cache_path));

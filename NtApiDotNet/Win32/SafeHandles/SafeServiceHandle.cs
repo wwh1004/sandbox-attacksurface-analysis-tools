@@ -36,6 +36,14 @@ namespace NtApiDotNet.Win32.SafeHandles
             return Win32NativeMethods.CloseServiceHandle(handle);
         }
 
+#if NET6_0_OR_GREATER
+        public SafeServiceHandle Detach()
+        {
+            IntPtr handle = DangerousGetHandle();
+            SetHandleAsInvalid();
+            return new SafeServiceHandle(handle, true);
+        }
+#else
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
         public SafeServiceHandle Detach()
         {
@@ -50,6 +58,7 @@ namespace NtApiDotNet.Win32.SafeHandles
             {
             }
         }
+#endif
 
         internal static SecurityInformation DEFAULT_SECURITY_INFORMATION = SecurityInformation.Dacl
                 | SecurityInformation.Owner

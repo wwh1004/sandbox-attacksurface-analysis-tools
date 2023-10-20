@@ -69,32 +69,36 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Cryptography
 
         private byte[] DecryptAESBlock(byte[] key, byte[] cipher_text, int offset)
         {
-            AesManaged aes = new AesManaged
+            using (var aes = Aes.Create())
             {
-                Mode = CipherMode.ECB,
-                Padding = PaddingMode.None,
-                Key = key,
-                IV = new byte[16]
-            };
-            var dec = aes.CreateDecryptor();
-            byte[] block = new byte[AES_BLOCK_SIZE];
-            dec.TransformBlock(cipher_text, offset, AES_BLOCK_SIZE, block, 0);
-            return block;
+                aes.Mode = CipherMode.ECB;
+                aes.Padding = PaddingMode.None;
+                aes.Key = key;
+                aes.IV = new byte[16];
+                using (var dec = aes.CreateDecryptor())
+                {
+                    byte[] block = new byte[AES_BLOCK_SIZE];
+                    dec.TransformBlock(cipher_text, offset, AES_BLOCK_SIZE, block, 0);
+                    return block;
+                }
+            }
         }
 
         private byte[] EncryptAESBlock(byte[] key, byte[] cipher_text, int offset)
         {
-            AesManaged aes = new AesManaged
+            using (var aes = Aes.Create())
             {
-                Mode = CipherMode.ECB,
-                Padding = PaddingMode.None,
-                Key = key,
-                IV = new byte[16]
-            };
-            var enc = aes.CreateEncryptor();
-            byte[] block = new byte[AES_BLOCK_SIZE];
-            enc.TransformBlock(cipher_text, offset, AES_BLOCK_SIZE, block, 0);
-            return block;
+                aes.Mode = CipherMode.ECB;
+                aes.Padding = PaddingMode.None;
+                aes.Key = key;
+                aes.IV = new byte[16];
+                using (var enc = aes.CreateEncryptor())
+                {
+                    byte[] block = new byte[AES_BLOCK_SIZE];
+                    enc.TransformBlock(cipher_text, offset, AES_BLOCK_SIZE, block, 0);
+                    return block;
+                }
+            }
         }
 
         private static byte[] DeriveAesKey(string password, string salt, int iterations, int key_size)
@@ -142,15 +146,17 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Cryptography
             byte[] hash = hmac.ComputeHash(cipher_text, 0, plain_text_length);
 
             byte[] new_key = KerberosEncryptionUtils.DeriveAesKey(key, derive_enc_key);
-            AesManaged aes = new AesManaged
+            using (var aes = Aes.Create())
             {
-                Mode = CipherMode.CBC,
-                Padding = PaddingMode.None,
-                Key = new_key,
-                IV = new byte[16]
-            };
-            var enc = aes.CreateEncryptor();
-            enc.TransformBlock(cipher_text, 0, cipher_text.Length, cipher_text, 0);
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.None;
+                aes.Key = new_key;
+                aes.IV = new byte[16];
+                using (var enc = aes.CreateEncryptor())
+                {
+                    enc.TransformBlock(cipher_text, 0, cipher_text.Length, cipher_text, 0);
+                }
+            }
 
             SwapEndBlocks(cipher_text);
 
@@ -209,15 +215,17 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Cryptography
 
             SwapEndBlocks(plain_text);
 
-            AesManaged aes = new AesManaged
+            using (var aes = Aes.Create())
             {
-                Mode = CipherMode.CBC,
-                Padding = PaddingMode.None,
-                Key = new_key,
-                IV = new byte[16]
-            };
-            var dec = aes.CreateDecryptor();
-            dec.TransformBlock(plain_text, 0, plain_text.Length, plain_text, 0);
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.None;
+                aes.Key = new_key;
+                aes.IV = new byte[16];
+                using (var dec = aes.CreateDecryptor())
+                {
+                    dec.TransformBlock(plain_text, 0, plain_text.Length, plain_text, 0);
+                }
+            }
 
             // Obviously not a secure check. This is for information only.
             HMACSHA1 hmac = new HMACSHA1(KerberosEncryptionUtils.DeriveAesKey(key, derive_mac_key));

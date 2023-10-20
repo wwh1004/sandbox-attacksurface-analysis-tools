@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <AssemblyName>NtApiDotNet</AssemblyName>
-    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard2.0;net6.0-windows</TargetFrameworks>
     <PackageId>NtApiDotNet</PackageId>
     <Authors>James Forshaw</Authors>
     <Company>Google LLC.</Company>
@@ -30,6 +30,13 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
+    <PackageReference Include="System.CodeDom" Version="4.5.0" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="5.0.0" />
+    <PackageReference Include="System.DirectoryServices" Version="5.0.0" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
     <PackageReference Include="System.CodeDom" Version="4.5.0" />
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="5.0.0" />
     <PackageReference Include="System.DirectoryServices" Version="5.0.0" />

@@ -43,7 +43,17 @@ namespace NtApiDotNet.Win32.SafeHandles
         /// </summary>
         /// <returns>The detached buffer.</returns>
         /// <remarks>The original buffer will become invalid after this call.</remarks>
-        [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
+#if NET6_0_OR_GREATER
+        public SafeLsaReturnBufferHandle Detach()
+        {
+            IntPtr handle = DangerousGetHandle();
+            SetHandleAsInvalid();
+            var ret = new SafeLsaReturnBufferHandle(handle, true);
+            ret.InitializeLength(LongLength);
+            return ret;
+        }
+#else
+  [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
         public SafeLsaReturnBufferHandle Detach()
         {
             RuntimeHelpers.PrepareConstrainedRegions();
@@ -59,5 +69,6 @@ namespace NtApiDotNet.Win32.SafeHandles
             {
             }
         }
+#endif
     }
 }

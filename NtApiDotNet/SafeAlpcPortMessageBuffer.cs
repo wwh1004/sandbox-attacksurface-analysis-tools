@@ -61,6 +61,14 @@ namespace NtApiDotNet
         /// </summary>
         /// <returns>The detached buffer.</returns>
         /// <remarks>The original buffer will become invalid after this call.</remarks>
+#if NET6_0_OR_GREATER
+        new public SafeAlpcPortMessageBuffer Detach()
+        {
+            IntPtr handle = DangerousGetHandle();
+            SetHandleAsInvalid();
+            return new SafeAlpcPortMessageBuffer(handle, Length);
+        }
+#else
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
         new public SafeAlpcPortMessageBuffer Detach()
         {
@@ -75,5 +83,6 @@ namespace NtApiDotNet
             {
             }
         }
+#endif
     }
 }

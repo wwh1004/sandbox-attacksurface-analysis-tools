@@ -78,7 +78,9 @@ namespace NtApiDotNet
         /// </summary>
         /// <returns>The elements as an array.</returns>
         /// <remarks>After doing this the current list will be cleared.</remarks>
+#if !NET6_0_OR_GREATER
         [ReliabilityContract(Consistency.MayCorruptProcess, Cer.MayFail)]
+#endif
         public T[] ToArrayAndClear()
         {
             T[] ret = ToArray();
@@ -277,7 +279,9 @@ namespace NtApiDotNet
         /// </summary>
         /// <returns>The list of handles which have been moved.</returns>
         /// <remarks>After doing this the current list will be cleared.</remarks>
+#if !NET6_0_OR_GREATER
         [ReliabilityContract(Consistency.MayCorruptProcess, Cer.MayFail)]
+#endif
         public SafeHandleList DangerousMove()
         {
             return new SafeHandleList(ToArrayAndClear());

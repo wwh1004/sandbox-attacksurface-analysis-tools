@@ -36,6 +36,14 @@ namespace NtApiDotNet.Utilities.SafeBuffers
         /// </summary>
         /// <returns>The detached buffer.</returns>
         /// <remarks>The original buffer will become invalid after this call.</remarks>
+#if NET6_0_OR_GREATER
+        public SafeEnclaveHandle Detach()
+        {
+            IntPtr handle = DangerousGetHandle();
+            SetHandleAsInvalid();
+            return new SafeEnclaveHandle(handle);
+        }
+#else
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
         public SafeEnclaveHandle Detach()
         {
@@ -50,5 +58,6 @@ namespace NtApiDotNet.Utilities.SafeBuffers
             {
             }
         }
+#endif
     }
 }

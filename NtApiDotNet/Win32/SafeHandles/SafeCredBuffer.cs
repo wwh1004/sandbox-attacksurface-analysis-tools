@@ -39,6 +39,14 @@ namespace NtApiDotNet.Win32.SafeHandles
 
         public override bool IsInvalid => handle == IntPtr.Zero;
 
+#if NET6_0_OR_GREATER
+        public SafeCredBuffer Detach()
+        {
+            IntPtr handle = DangerousGetHandle();
+            SetHandleAsInvalid();
+            return new SafeCredBuffer(handle);
+        }
+#else
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
         public SafeCredBuffer Detach()
         {
@@ -53,5 +61,6 @@ namespace NtApiDotNet.Win32.SafeHandles
             {
             }
         }
+#endif
     }
 }

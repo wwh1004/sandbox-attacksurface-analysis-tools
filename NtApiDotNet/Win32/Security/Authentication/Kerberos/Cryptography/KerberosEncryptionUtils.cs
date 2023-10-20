@@ -27,21 +27,25 @@ namespace NtApiDotNet.Win32.Security.Authentication.Kerberos.Cryptography
 
         public static byte[] DeriveAesKey(byte[] base_key, byte[] folded_key)
         {
-            Aes encrypt = new AesManaged();
-            encrypt.Mode = CipherMode.ECB;
-
-            folded_key = folded_key.CloneBytes();
-
-            byte[] ret = new byte[base_key.Length];
-            var transform = encrypt.CreateEncryptor(base_key, new byte[16]);
-            transform.TransformBlock(folded_key, 0, 16, folded_key, 0);
-            Array.Copy(folded_key, ret, 16);
-            if (ret.Length > 16)
+            using (var encrypt = Aes.Create())
             {
-                transform.TransformBlock(folded_key, 0, 16, folded_key, 0);
-                Array.Copy(folded_key, 0, ret, 16, 16);
+                encrypt.Mode = CipherMode.ECB;
+
+                folded_key = folded_key.CloneBytes();
+
+                byte[] ret = new byte[base_key.Length];
+                using (var transform = encrypt.CreateEncryptor(base_key, new byte[16]))
+                {
+                    transform.TransformBlock(folded_key, 0, 16, folded_key, 0);
+                    Array.Copy(folded_key, ret, 16);
+                    if (ret.Length > 16)
+                    {
+                        transform.TransformBlock(folded_key, 0, 16, folded_key, 0);
+                        Array.Copy(folded_key, 0, ret, 16, 16);
+                    }
+                }
+                return ret;
             }
-            return ret;
         }
 
         public static byte[] DeriveTempKey(KerberosKeyUsage key_usage, byte key_type)

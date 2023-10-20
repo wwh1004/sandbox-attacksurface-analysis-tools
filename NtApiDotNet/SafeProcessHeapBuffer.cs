@@ -91,7 +91,9 @@ namespace NtApiDotNet
         /// </summary>
         /// <returns>The detached buffer.</returns>
         /// <remarks>The original buffer will become invalid after this call.</remarks>
+#if !NET6_0_OR_GREATER
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
+#endif
         public SafeProcessHeapBuffer Detach()
         {
             return Detach(Length);
@@ -103,6 +105,19 @@ namespace NtApiDotNet
         /// <param name="length">Specify a new length for the detached buffer. Must be &lt;= Length.</param>
         /// <returns>The detached buffer.</returns>
         /// <remarks>The original buffer will become invalid after this call.</remarks>
+#if NET6_0_OR_GREATER
+        public SafeProcessHeapBuffer Detach(int length)
+        {
+            if (length > Length)
+            {
+                throw new ArgumentException("Buffer length is smaller than new length");
+            }
+
+            IntPtr handle = DangerousGetHandle();
+            SetHandleAsInvalid();
+            return new SafeProcessHeapBuffer(handle, length, true);
+        }
+#else
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
         public SafeProcessHeapBuffer Detach(int length)
         {
@@ -122,5 +137,6 @@ namespace NtApiDotNet
             {
             }
         }
+#endif
     }
 }

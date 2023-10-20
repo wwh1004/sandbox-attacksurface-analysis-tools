@@ -1107,6 +1107,14 @@ namespace NtApiDotNet
         /// </summary>
         /// <returns>The detached buffer.</returns>
         /// <remarks>The original buffer will become invalid after this call.</remarks>
+#if NET6_0_OR_GREATER
+        new public SafeAlpcMessageAttributesBuffer Detach()
+        {
+            IntPtr handle = DangerousGetHandle();
+            SetHandleAsInvalid();
+            return new SafeAlpcMessageAttributesBuffer(handle, Length, true);
+        }
+#else
         [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
         new public SafeAlpcMessageAttributesBuffer Detach()
         {
@@ -1121,6 +1129,7 @@ namespace NtApiDotNet
             {
             }
         }
+#endif
 
         /// <summary>
         /// Get the NULL buffer.

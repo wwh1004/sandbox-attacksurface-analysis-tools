@@ -119,7 +119,9 @@ namespace NtApiDotNet.Win32
         public void Serialize(Stream stm)
         {
             BinaryFormatter formatter = new BinaryFormatter();
+#pragma warning disable SYSLIB0011
             formatter.Serialize(stm, this);
+#pragma warning restore SYSLIB0011
         }
 
         /// <summary>
@@ -326,7 +328,9 @@ namespace NtApiDotNet.Win32
             BinaryFormatter fmt = new BinaryFormatter();
             fmt.FilterLevel = TypeFilterLevel.Low;
             // TODO: Filter types to avoid people complaining.
+#pragma warning disable SYSLIB0011
             return (RpcServer)fmt.Deserialize(stm);
+#pragma warning restore SYSLIB0011
         }
 
         /// <summary>
